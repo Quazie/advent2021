@@ -1,29 +1,36 @@
-with open('input1.txt') as f:
+DEBUG = False
+
+def dprint(*args):
+    if DEBUG:
+        print("".join(map(str,args)))
+
+filename ="input1.txt"
+if DEBUG:
+    filename = "test1.txt"
+
+with open(filename) as f:
     lines = f.readlines()
 
+processed_lines = list(map(int, lines))
 
-single_inc = 0
-rolling_inc = 0
-last = ""
-last3 = []
-for line in lines:
-    cur = int(line)
+def part1(lines):
+    i = 1
+    inc = 0
+    while i < len(lines):
+        if lines[i] > lines[i-1]:
+            inc += 1
+        i += 1
+    print("Single increment is " + str(inc))
 
-    # compare single increment
-    if last != "":
-        if cur > last:
-            single_inc = single_inc + 1
-    if len(last3) == 3:
-        old = sum(last3)
-        last3.pop(0)
-        last3.append(cur)
-        new = sum(last3)
-        if new > old:
-            rolling_inc = rolling_inc + 1
 
-    else:
-        last3.append(cur)
-    last = cur
-
-print "Single increment is " + str(single_inc)
-print "Rolling increment is " + str(rolling_inc)
+def part2(lines):
+    i = 3
+    inc = 0
+    while i < len(lines):
+        if sum(lines[i-2:i+1]) > sum(lines[i-3:i]):
+            inc += 1
+        i += 1
+    print("Rolling increment is " + str(inc))
+    
+part1(processed_lines)
+part2(processed_lines)
