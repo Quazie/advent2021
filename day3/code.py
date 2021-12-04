@@ -58,7 +58,6 @@ def process_oxy_co2(values, pos, def_filter):
 def process_oxy(values, pos):
     return process_oxy_co2(values, pos, "0")
 
-
 def process_co2(values, pos):
     return process_oxy_co2(values, pos, "1")
 
