@@ -62,6 +62,8 @@ def mark_board(board, call):
         won = True
     return won, total
 
+def print_answer(total, call):
+    print("Sum: " + str(total) + " Call: " + str(call) + " Answer: " + str(total*call))
 def part1():
     calls, boards = process_raw_lines(file_lines)
     for call in calls:
@@ -69,14 +71,11 @@ def part1():
             won, total = mark_board(board, call)
             if won:
                 print("First to win")
-                print("Sum: " + str(total) + " Call: " + str(call) + " Answer: " + str(total*call))
+                print_answer(total, call)
                 break
         else:  # only execute when it's no break in the inner loop
             continue
         break
-
-
-
 
 def part2():
     calls, boards = process_raw_lines(file_lines)
@@ -96,7 +95,7 @@ def part2():
 
         if len(boards) == 0:
             print("Last to win")
-            print("Sum: " + str(total) + " Call: " + str(call) + " Answer: " + str(total*call))
+            print_answer(total, call)
             break
 
 part1()
