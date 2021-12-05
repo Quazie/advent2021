@@ -11,16 +11,21 @@ if DEBUG:
 with open(filename) as f:
     file_lines = f.readlines()
 
-def empty_board(board_size):
-    return [ [0]*board_size for i in range(board_size)]
+
+BOARD_SIZE = 5
+
+def empty_board():
+    return [ [0]*BOARD_SIZE for i in range(BOARD_SIZE)]
 
 def process_raw_lines(lines):
 
     bingo_calls = list(map(int, lines[0].strip().split(",")))
 
+    # Ensure we are using a copy of the boards for each process call, 
+    # as we'll be editing the returned boards directly
     remaining_lines = lines[1:]
     boards = []
-    board = empty_board(5)
+    board = empty_board()
     board_idx = 0
     for line in remaining_lines:
         line = line.strip()
@@ -28,9 +33,9 @@ def process_raw_lines(lines):
             
             board[board_idx] = list(map(int, line.strip().split()))
             board_idx += 1
-            if board_idx == 5:
+            if board_idx == BOARD_SIZE:
                 boards.append(board)
-                board = empty_board(5)
+                board = empty_board()
                 board_idx=0
 
 
@@ -46,14 +51,14 @@ def mark_board(board, call):
             if call == col:
                 board[index_l][index_c] = "x"
 
-                for i in range(5):
+                for i in range(BOARD_SIZE):
                     if board[index_l][i] == 'x':
                         l += 1
                     if board[i][index_c] == 'x':
                         c += 1
             elif col != 'x':
                 total += col
-    if l == 5 or c == 5:
+    if l == BOARD_SIZE or c == BOARD_SIZE:
         won = True
     return won, total
 
