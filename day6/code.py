@@ -12,7 +12,7 @@ with open(filename) as f:
     file_lines = f.readlines()
 
 def process_line(line):
-    return str(line)
+    return str(line.strip())
 
 processed_lines = list(map(process_line, file_lines))
 
