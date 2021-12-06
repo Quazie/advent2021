@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 
 def dprint(*args):
     if DEBUG:
@@ -11,16 +11,31 @@ if DEBUG:
 with open(filename) as f:
     file_lines = f.readlines()
 
-def process_line(line):
-    return str(line.strip())
 
-processed_lines = list(map(process_line, file_lines))
 
-def part1(lines):
-    dprint (lines)
+processed_lines = list(map(int, file_lines[0].split(',')))
 
-def part2(lines):
-    dprint (lines)
+def calculate_fish(days, starting_fish):
+    days_til_breed = [0] * 9
+
+    dprint(starting_fish)
+    for fish in starting_fish:
+        dprint(fish)
+        days_til_breed[fish] += 1
+    dprint(days_til_breed)
+    for i in range(days):
+        new_fish = days_til_breed.pop(0)
+        days_til_breed.append(new_fish)
+        days_til_breed[6] += new_fish
+        dprint(days_til_breed)
+    
+    print("In " + str(days) + " days - Fishes: " + str(sum(days_til_breed)))
+
+def part1(fishes):
+    calculate_fish(80, fishes)
+
+def part2(fishes):
+        calculate_fish(256, fishes)
 
 part1(processed_lines)
 part2(processed_lines)
