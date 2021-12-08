@@ -13,7 +13,6 @@ with open(filename) as f:
 
 processed_lines = list(map(int, file_lines[0].split(',')))
 
-
 def insert_crab(crab_list, pos):
     if len(crab_list) <= pos:
         missing = pos - len(crab_list) + 1
