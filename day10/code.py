@@ -42,7 +42,6 @@ def part1(lines):
                 expected = BRACKET_MAP[to_close.pop(len(to_close)-1)]
 
                 if char != expected:
-                    print(char)
                     ans += COST[char]
                     break
 
@@ -84,10 +83,6 @@ def part2(lines):
     ans.sort()
     print(ans[int((len(ans)-1)/2)])
 
-
-
-
-    print(len(lines))
 
 
 part1(processed_lines)
