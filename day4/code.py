@@ -1,10 +1,12 @@
 DEBUG = False
 
+
 def dprint(*args):
     if DEBUG:
-        print("".join(map(str,args)))
+        print("".join(map(str, args)))
 
-filename ="input1.txt"
+
+filename = "input1.txt"
 if DEBUG:
     filename = "test1.txt"
 
@@ -14,14 +16,16 @@ with open(filename) as f:
 
 BOARD_SIZE = 5
 
+
 def empty_board():
-    return [ [0]*BOARD_SIZE for i in range(BOARD_SIZE)]
+    return [[0] * BOARD_SIZE for i in range(BOARD_SIZE)]
+
 
 def process_raw_lines(lines):
 
     bingo_calls = list(map(int, lines[0].strip().split(",")))
 
-    # Ensure we are using a copy of the boards for each process call, 
+    # Ensure we are using a copy of the boards for each process call,
     # as we'll be editing the returned boards directly
     remaining_lines = lines[1:]
     boards = []
@@ -30,16 +34,16 @@ def process_raw_lines(lines):
     for line in remaining_lines:
         line = line.strip()
         if line:
-            
+
             board[board_idx] = list(map(int, line.strip().split()))
             board_idx += 1
             if board_idx == BOARD_SIZE:
                 boards.append(board)
                 board = empty_board()
-                board_idx=0
-
+                board_idx = 0
 
     return bingo_calls, boards
+
 
 def mark_board(board, call):
     total = 0
@@ -52,18 +56,23 @@ def mark_board(board, call):
                 board[index_l][index_c] = "x"
 
                 for i in range(BOARD_SIZE):
-                    if board[index_l][i] == 'x':
+                    if board[index_l][i] == "x":
                         l += 1
-                    if board[i][index_c] == 'x':
+                    if board[i][index_c] == "x":
                         c += 1
-            elif col != 'x':
+            elif col != "x":
                 total += col
     if l == BOARD_SIZE or c == BOARD_SIZE:
         won = True
     return won, total
 
+
 def print_answer(total, call):
-    print("Sum: " + str(total) + " Call: " + str(call) + " Answer: " + str(total*call))
+    print(
+        "Sum: " + str(total) + " Call: " + str(call) + " Answer: " + str(total * call)
+    )
+
+
 def part1():
     calls, boards = process_raw_lines(file_lines)
     for call in calls:
@@ -77,6 +86,7 @@ def part1():
             continue
         break
 
+
 def part2():
     calls, boards = process_raw_lines(file_lines)
     total = 0
@@ -86,7 +96,7 @@ def part2():
             won, total = mark_board(board, call)
             if won:
                 boards_to_remove.append(i)
-        
+
         # Just make sure we don't screw up the order while removing boards
         boards_to_remove.reverse()
         for board_idx in boards_to_remove:
@@ -97,6 +107,7 @@ def part2():
             print("Last to win")
             print_answer(total, call)
             break
+
 
 part1()
 print()

@@ -1,10 +1,12 @@
 DEBUG = False
 
+
 def dprint(*args):
     if DEBUG:
-        print("".join(map(str,args)))
+        print("".join(map(str, args)))
 
-filename ="input1.txt"
+
+filename = "input1.txt"
 if DEBUG:
     filename = "test1.txt"
 
@@ -19,6 +21,7 @@ for line in file_lines:
 def parse_line(line):
     return line[0], int(line[1])
 
+
 def part1(lines):
     depth = 0
     pos = 0
@@ -32,8 +35,15 @@ def part1(lines):
             depth_mult = -1
 
         if command != "forward":
-            depth += (depth_mult*amount)
-    print("hor: " + str(pos) + " depth: " + str(depth) + " - answer: " + (str(pos * depth)))
+            depth += depth_mult * amount
+    print(
+        "hor: "
+        + str(pos)
+        + " depth: "
+        + str(depth)
+        + " - answer: "
+        + (str(pos * depth))
+    )
 
 
 def part2(lines):
@@ -51,9 +61,18 @@ def part2(lines):
             aim_mult = -1
 
         if command != "forward":
-            aim += (aim_mult*amount)
+            aim += aim_mult * amount
 
-    print("hor: " + str(pos) + " depth: " + str(depth) + " aim: " + str(aim) + " - answer: " + (str(pos * depth)))
+    print(
+        "hor: "
+        + str(pos)
+        + " depth: "
+        + str(depth)
+        + " aim: "
+        + str(aim)
+        + " - answer: "
+        + (str(pos * depth))
+    )
 
 
 part1(processed_lines)

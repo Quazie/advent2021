@@ -35,12 +35,12 @@ def part1(lines):
 
 
 def Diff(li1, li2):
-    return + list(set(li2) - set(li1))
+    return +list(set(li2) - set(li1))
 
 
 def get_char_map(line):
     char_map = {}
-    for char in ['a', 'b', 'c', 'd', 'e', 'f', 'g']:
+    for char in ["a", "b", "c", "d", "e", "f", "g"]:
         char_map[char] = ""
     inline, _ = line
 
@@ -52,18 +52,18 @@ def get_char_map(line):
     two_three_five = list(filter(lambda char: len(char) == 5, inline))
 
     # Find top segment
-    char_map['a'] = list(set(seven) - set(one))[0]
+    char_map["a"] = list(set(seven) - set(one))[0]
 
     # Figure out which segments are which in the 1
     for num in zero_six_nine:
         one_a = one[0]
         one_b = one[1]
         if one_a not in num:
-            char_map['c'] = one_a
-            char_map['f'] = one_b
+            char_map["c"] = one_a
+            char_map["f"] = one_b
         elif one_b not in num:
-            char_map['c'] = one_b
-            char_map['f'] = one_a
+            char_map["c"] = one_b
+            char_map["f"] = one_a
 
     # ignore those within the four, so we can solve for the last two
     for char in one:
@@ -71,12 +71,12 @@ def get_char_map(line):
 
     # Solve for the four segments
     for num in two_three_five:
-        if char_map['f'] not in num:
+        if char_map["f"] not in num:
             for four_char in four:
                 if four_char in num:
-                    char_map['d'] = four_char
-            four.remove(char_map['d'])
-    char_map['b'] = four[0]
+                    char_map["d"] = four_char
+            four.remove(char_map["d"])
+    char_map["b"] = four[0]
 
     # Clean up eight to only be remaining two letters, which we know are the bottom left two
     for char in char_map:
@@ -86,16 +86,14 @@ def get_char_map(line):
 
     # Find 9, and use that to solve for the last two segments
     for num in zero_six_nine:
-        if char_map['c'] in num and char_map['d'] in num:
+        if char_map["c"] in num and char_map["d"] in num:
             for eight_char in eight:
                 if eight_char not in num:
-                    char_map['e'] = eight_char
-    eight.remove(char_map['e'])
-    char_map['g'] = eight[0]
-
+                    char_map["e"] = eight_char
+    eight.remove(char_map["e"])
+    char_map["g"] = eight[0]
 
     dprint(len(char_map) == len(set(char_map.values())))
-        
 
     return char_map
 
