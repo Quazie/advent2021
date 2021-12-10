@@ -23,29 +23,12 @@ BRACKET_MAP = {
     "{":"}"
 }
 
-COST = {
+ILLEGAL_COST = {
     ")":3,
     "]":57,
     "}":1197,
     ">":25137
 }
-
-def part1(lines):
-    ans = 0
-    for line in lines:
-        to_close = []
-        for char in line:
-            if char in ['{', '(', '[', '<']:
-                to_close.append(char)
-                #dprint(to_close)
-            else:
-                expected = BRACKET_MAP[to_close.pop(len(to_close)-1)]
-
-                if char != expected:
-                    ans += COST[char]
-                    break
-
-    print(ans)
 
 CLOSE_COST = {
     ")":1,
@@ -54,22 +37,20 @@ CLOSE_COST = {
     ">":4
 }
 
-def part2(lines):
-    to_remove = []
-    ans = []
-    for i, line in enumerate(lines):
+def both_parts(lines):
+    part_2_scores = []
+    part_1_score = 0
+    for line in lines:
         to_close = []
         illegal = False
         for char in line:
             if char in ['{', '(', '[', '<']:
                 to_close.append(char)
-                #dprint(to_close)
             else:
-                expected = BRACKET_MAP[to_close.pop(len(to_close)-1)]
+                expected = BRACKET_MAP[to_close.pop()]
 
                 if char != expected:
-                    to_remove.append(i)
-
+                    part_1_score += ILLEGAL_COST[char]
                     illegal = True
                     break
         if not illegal:
@@ -77,13 +58,15 @@ def part2(lines):
             local_score = 0
             while len(to_close):
                 local_score *= 5
-                local_score += CLOSE_COST[BRACKET_MAP[to_close.pop(len(to_close)-1)]]
-            ans.append(local_score)
-
-    ans.sort()
-    print(ans[int((len(ans)-1)/2)])
+                local_score += CLOSE_COST[BRACKET_MAP[to_close.pop()]]
+            part_2_scores.append(local_score)
 
 
+    print("Part 1: ", part_1_score)
+    
+    
+    part_2_scores.sort()
+    print("Part 2: ", part_2_scores[int((len(part_2_scores)-1)/2)])
 
-part1(processed_lines)
-part2(processed_lines)
+
+both_parts(processed_lines)
