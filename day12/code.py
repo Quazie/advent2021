@@ -42,20 +42,22 @@ def dfs(graph, node_name, traversed, found, found_dupe):
         found.append(traversed.copy())
         return
     node = graph[node_name]
+
     for element in node:
-        new_dupe = found_dupe or (
-            element.islower()
-            and element in traversed
-            and element not in ["start", "end"]
-        )
-        if (
-            element.islower()
-            and element in traversed
-            and (found_dupe or element in ["start", "end"])
-        ):
+        is_dupe_lower_dest = element.islower() and element in traversed
+        is_start_or_end = element in ["start", "end"]
+
+        if is_dupe_lower_dest and (found_dupe or is_start_or_end):
             continue
+
         traversed.append(element)
-        dfs(graph, element, traversed, found, new_dupe)
+        dfs(
+            graph,
+            element,
+            traversed,
+            found,
+            found_dupe or is_dupe_lower_dest,
+        )
         traversed.pop()
 
 
